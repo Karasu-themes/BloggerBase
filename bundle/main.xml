@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html b:css='false' b:js='true' b:defaultwidgetversion='2' b:layoutsVersion='3' expr:dir='data:blog.locale.languageDirection' expr:lang='data:blog.locale.language' prefix='og: http://ogp.me/ns#'>
+<!-- bloggerbase v0.1.0   -->
+<head>
+
+<!-- Title -->
+<title><data:view.title.escaped/></title>
+
+<!-- Meta data -->
+<b:include data='blog' name='all-head-content'/>
+
+<!-- Meta data: twitter -->
+<b:if cond='data:view.featuredImage'>
+<meta property='twitter:card' content='summary_large_image'/>
+<meta property='twitter:url' expr:content='data:view.url.canonical'/>
+<meta property='twitter:title' expr:content='data:view.title'/>
+<meta property='twitter:description' expr:content='data:view.description'/>
+<meta property='twitter:image' expr:content='resizeImage(data:view.featuredImage, "500", "500:400")'/>
+</b:if>
+
+<!-- Meta data: Viewport -->
+<meta content='width=device-width, initial-scale=1' name='viewport'/> 
+
+<b:skin><![CDATA[
+/!*
+Theme Name: BloggerBase
+Theme URI: https://shop.karasu-themes.com
+Author: Marcelo (Copyright karasu-themes 2022)
+Author URI: https://github.com/MarceloTLD
+Version: 0.1.0
+License: Premium
+*/
+
+<!-- Global config -->
+<Variable name="g.cmt" description="Set comment system" type="string" value="blogger" />
+<Variable name="g.shortName" description="Set shortname for disqus comments" type="string" value="you_shortname" />
+
+/*
+** Main css
+*----------------------------------*/
+body{background:red}
+]]></b:skin>
+
+
+<!-- Layout style css -->
+<b:if cond='data:view.isLayoutMode'>
+<b:template-skin><![CDATA[
+/* Your layout style is goes here */ 
+]]></b:template-skin>
+</b:if>
+</head>
+<body>
+
+<b:defaultmarkups>
+  <!-- common -->
+<b:defaultmarkup type='Common'>
+  <b:includable id='widget-title'>
+  <b:if cond='data:title'>
+    <h3 class='widget-title'><data:title/></h3>
+  </b:if>
+</b:includable> 
+</b:defaultmarkup> 
+</b:defaultmarkups>
+
+<b:section id='blog'>
+  <b:widget id='Blog1' type='Blog'>
+
+  <b:includable id='main' var='top'>
+
+    <!-- Loop -->
+    <b:if cond='data:view.isMultipleItems'>
+        <b:loop values='data:posts' var='post'>
+          <b:include name='post' data='post'/>
+        </b:loop>
+
+        <b:include name='postPagination'/> <!-- Pagination -->
+      <b:else/>
+        <b:loop values='data:posts' var='post'>
+          <b:include name='post' data='post'/>
+        </b:loop>
+    </b:if><!-- ./loop -->
+
+  </b:includable>
+
+  <b:includable id='post' var='post'>
+    <b:if cond='data:view.isMultipleItems'>
+      <!-- Multiple items content -->
+
+      <b:elseif cond='data:view.isPost'/>
+      <!-- single items -->
+
+      <!-- Comments -->
+      <b:include name='comments' />
+
+      <b:elseif cond='data:view.isPage'/>
+      <!-- Page items content -->
+
+    </b:if>
+  </b:includable>
+
+  <b:includable id="comment-blogger">
+    <b:include name='commentPicker' data='post'/>
+  </b:includable>
+
+  <b:includable id="comment-disqus">
+      <div id='disqus_thread'/>
+      <script>var disqus_config=function(){this.page.url="<data:view.url.canonical/>",this.page.title="<data:view.title.escaped/>"};!function(){var t=document,e=t.createElement("script");e.src="https://<data:skin.vars.g_shortName/>.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}();</script>
+  </b:includable>
+
+  <b:includable id='postPagination'>
+    <div class='blog-pager' id='blog-pager'>
+      <b:include cond='data:newerPageUrl' name='previousPageLink'/>
+      <b:include cond='data:olderPageUrl' name='nextPageLink'/>
+    </div>
+  </b:includable>
+
+  <b:includable id='previousPageLink'>
+    <b:tag name='a' expr:href='data:newerPageUrl'><data:messages.newerPosts/></b:tag>
+  </b:includable>
+
+  <b:includable id='nextPageLink'>
+    <b:tag name='a' expr:href='data:olderPageUrl'><data:messages.olderPosts/></b:tag>
+  </b:includable>
+
+  <b:includable id='status-message'>
+    <b:tag name='div'><data:navMessage/></b:tag>
+  </b:includable>
+
+  <b:includable id="comment-facebook">
+    <div id="fb-root"/>
+    <b:if cond='data:skin.vars.g_cmt == "facebook"'>
+      <script async='async' defer='defer' crossorigin='anonymous' src='https://connect.facebook.net/es_LA/all.js#xfbml=1'></script>
+    </b:if>
+    <div class='fb-comments' expr:data-href='data:view.url.canonical' data-width='100%' data-numposts='5'></div>
+  </b:includable>
+
+  <b:includable id="commentPicker" var='post'>
+    <div class='comments threaded'
+        expr:data-embed='data:post.embedCommentForm' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+      <a name='comments'/>
+
+      <div class='comments-content'>
+        <div id='comment-holder'><data:post.commentHtml/></div>
+      </div>
+
+      <b:if cond='data:post.allowNewComments'>
+        <b:include data='post' name='threadedCommentForm'/>
+      <b:else/>
+        <p class='comment-footer'>
+          <data:post.noNewCommentsText/>
+        </p>
+      </b:if>
+    </div>
+  </b:includable>
+
+  <b:includable id='comments'><b:include expr:name='"comment-" + data:skin.vars.g_cmt'/></b:includable>
+
+  <b:includable id='threadedCommentForm' var='post'>
+    <div class='comment-form'>
+      <a name='comment-form'/>
+      <b:include data='post' name='commentFormIframeSrc'/>
+      <iframe class='blogger-iframe-colorize blogger-comment-from-post' id='comment-editor' name='comment-editor' src=''/>
+      <data:post.cmtfpIframe/>
+      <script type='text/javascript'>BLOG_CMT_createIframe('<data:post.appRpcRelayPath/>');//<![CDATA[
+      (function(){let img = document.querySelectorAll('.avatar-image-container img');for (var i = 0; i < img.length; i++) {let imgPath = img[i].getAttribute('src');img[i].setAttribute('src', imgPath.replace(/s\B\d{2,4}/,"s56"));}})();//]]></script>
+    </div>
+  </b:includable>
+
+  <b:includable id='threadedCommentJs' var='post'>
+    <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
+      <b:template-script inline='true' name='threaded_comments'/>
+      <script type='text/javascript'>blogger.widgets.blog.initThreadedComments(<data:post.commentJso/>, <data:post.commentMsgs/>, <data:post.commentConfig/>);</script>
+  </b:includable>
+
+  <b:includable id='paginationLink'><!--empty--></b:includable>
+
+</b:widget> 
+</b:section>
+
+</body>
+
+</html>

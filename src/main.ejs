@@ -1,0 +1,58 @@
+<%- xmlTag(); %>
+<!DOCTYPE html>
+<html <%- htmlTags({
+  "b:css": false,
+  "b:js": true,
+  "b:defaultwidgetversion": 2,
+  "b:layoutsVersion": 3,
+  "expr:dir": 'data:blog.locale.languageDirection',
+  "expr:lang": 'data:blog.locale.language',
+  prefix: 'og: http://ogp.me/ns#' }) _%>>
+<!-- <%- name %> v<%- version %>   -->
+<head>
+
+<%- include('./blogger/base/head') %> 
+
+<b:skin><![CDATA[
+/!*
+Theme Name: <%- themeName %>
+Theme URI: https://shop.karasu-themes.com
+Author: Marcelo (Copyright karasu-themes 2022)
+Author URI: https://github.com/MarceloTLD
+Version: <%- themeVersion %>
+License: Premium
+*/
+
+<%- 
+Variables( "Global config" , [
+{name: "g.cmt", description: "Set comment system", type: "string", value: "blogger"},
+{name: "g.shortName", description: "Set shortname for disqus comments", type: "string", value: "you_shortname"},
+])_%>
+
+/*
+** Main css
+*----------------------------------*/
+<%- include('../bundle/css/main.css') %>
+]]></b:skin>
+
+
+<!-- Layout style css -->
+<b:if cond='data:view.isLayoutMode'>
+<b:template-skin><![CDATA[
+<%- include('./blogger/base/layout.css') %> 
+]]></b:template-skin>
+</b:if>
+</head>
+<body>
+
+<b:defaultmarkups>
+  <%- include('./blogger/markups/default') %> 
+</b:defaultmarkups>
+
+<b:section id='blog'>
+  <%- include('./blogger/section/blog') %> 
+</b:section>
+
+</body>
+
+</html>
