@@ -32,14 +32,16 @@ Version: 0.1.0
 License: Premium
 */
 
+/*
 <!-- Global config -->
 <Variable name="g.cmt" description="Set comment system" type="string" value="blogger" />
 <Variable name="g.shortName" description="Set shortname for disqus comments" type="string" value="you_shortname" />
+*/
 
 /*
 ** Main css
 *----------------------------------*/
-body{background:red}
+body{background:#eee}
 ]]></b:skin>
 
 
