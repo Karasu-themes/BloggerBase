@@ -27,12 +27,17 @@
   },
   "homepage": "https://github.com/Karasu-themes/bloggerBase#readme",
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^5.0.0",
-    "autoprefixer": "^10.4.13",
-    "cssnano": "^5.1.14",
-    "ejs": "^3.1.9",
-    "postcss": "^8.4.19",
+    "@fullhuman/postcss-purgecss": "5.0.0",
+    "@rollup/plugin-babel": "6.0.3",
+    "@rollup/plugin-node-resolve": "15.0.2",
+    "@rollup/plugin-terser": "0.4.1",
+    "autoprefixer": "10.4.13",
+    "chokidar": "3.5.3",
+    "cssnano": "5.1.14",
+    "ejs": "3.1.9",
+    "postcss": "8.4.23",
+    "rollup": "3.21.2",
     "sass": "1.56.2",
-    "uglify-js": "^3.17.4"
+    "uglify-js": "3.17.4"
   }
 }
