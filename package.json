@@ -1,6 +1,6 @@
 {
   "name": "bloggerbase",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A basic tool for building blogger template based on ejs",
   "repository": {
     "type": "git",

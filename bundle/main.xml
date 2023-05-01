@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html b:css='false' b:js='true' b:defaultwidgetversion='2' b:layoutsVersion='3' expr:dir='data:blog.locale.languageDirection' expr:lang='data:blog.locale.language' prefix='og: http://ogp.me/ns#'>
-<!-- bloggerbase v0.1.0   -->
+<!-- bloggerbase v1.0.0 | https://github.com/Karasu-themes/BloggerBase  -->
 <head>
 
 <!-- Title -->
@@ -25,11 +25,12 @@
 <b:skin><![CDATA[
 /!*
 Theme Name: BloggerBase
-Theme URI: https://shop.karasu-themes.com
-Author: Marcelo (Copyright karasu-themes 2022)
-Author URI: https://github.com/MarceloTLD
-Version: 0.1.0
-Release under license GPL 3.0
+Theme Description: A blank template for build a blogger template
+Theme URI: https://github.com/Karasu-themes/BloggerBase/tree/main/bundle
+Author: MarceloTLD
+Author URI: https://github.com/marceloTLD
+Version: 1.0.0
+Release under MIT License
 */
 
 /*
@@ -41,25 +42,38 @@ Release under license GPL 3.0
 /*
 ** Main css
 *----------------------------------*/
-body{background:#eee}
+body{background:red;color:#fff}
 ]]></b:skin>
 
 
 <!-- Layout style css -->
 <b:if cond='data:view.isLayoutMode'>
 <b:template-skin><![CDATA[
-/* Your layout style is goes here */ 
+/* Your layout style is goes here */
 ]]></b:template-skin>
 </b:if>
 </head>
 <body>
 
 <b:defaultmarkups>
-  <!-- common -->
+<!-- common -->
 <b:defaultmarkup type='Common'>
-  <b:includable id='widget-title'>
+<b:includable id='widget-title'>
   <b:if cond='data:title'>
     <h3 class='widget-title'><data:title/></h3>
+  </b:if>
+</b:includable>
+
+<b:includable id='g:image'>
+  <b:if cond='data:src'>
+    <b:tag name='img' expr:alt="data:alt ?: data:messages.image">
+      <b:attr name='src' expr:value='(data:src contains "blogger.googleusercontent.com/img/a/" and data:src.isResizable) ? resizeImage(data:src, (data:resize ?: data:skin.vars.t_resizeImage), (data:ratio ?: data:skin.vars.t_ratioImage) ) + (data:params ? "-" + data:params : "-" + data:skin.vars.t_imageParams) : resizeImage(data:src, (data:resize ?: data:skin.vars.t_resizeImage), (data:ratio ?: data:skin.vars.t_ratioImage) )'/>
+      <b:attr name='width' value='100%'/>
+      <b:attr name='height' value='100%'/>
+      <b:attr cond='data:lazy' name='loading' value='lazy'/>
+    </b:tag>
+    <b:else/>
+    <img expr:src='data:skin.vars.t_defaultImage' />
   </b:if>
 </b:includable> 
 </b:defaultmarkup> 
@@ -88,16 +102,18 @@ body{background:#eee}
   <b:includable id='post' var='post'>
     <b:if cond='data:view.isMultipleItems'>
       <!-- Multiple items content -->
-
+      
       <b:elseif cond='data:view.isPost'/>
       <!-- single items -->
 
-      <!-- Comments -->
-      <b:include name='comments' />
+<!-- Comments -->
+<b:include name='comments' />
 
       <b:elseif cond='data:view.isPage'/>
-      <!-- Page items content -->
+      <!-- single items -->
 
+<!-- Comments -->
+<b:include name='comments' />
     </b:if>
   </b:includable>
 
@@ -180,6 +196,8 @@ body{background:#eee}
 </b:widget> 
 </b:section>
 
+&lt;textarea id=&quot;bjs&quot; readonly hidden&gt;
 </body>
-
+&lt;/textarea&gt;
+<script>document.getElementById('bjs').remove()</script>&lt;/body&gt;
 </html>
