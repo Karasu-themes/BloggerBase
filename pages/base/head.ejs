@@ -1,0 +1,17 @@
+<!-- Title -->
+<title><data:view.title.escaped/></title>
+
+<!-- Meta data -->
+<b:include data='blog' name='all-head-content'/>
+
+<!-- Meta data: twitter -->
+<b:if cond='data:view.featuredImage'>
+<meta property='twitter:card' content='summary_large_image'/>
+<meta property='twitter:url' expr:content='data:view.url.canonical'/>
+<meta property='twitter:title' expr:content='data:view.title'/>
+<meta property='twitter:description' expr:content='data:view.description'/>
+<meta property='twitter:image' expr:content='resizeImage(data:view.featuredImage, "500", "500:400")'/>
+</b:if>
+
+<!-- Meta data: Viewport -->
+<meta content='width=device-width, initial-scale=1' name='viewport'/>
