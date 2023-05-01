@@ -1,7 +1,7 @@
 {
   "name": "bloggerbase",
   "version": "0.1.0",
-  "description": "Barebone template for building a Blogger template",
+  "description": "A basic tool for building blogger template based on ejs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Karasu-themes/bloggerBase.git"
