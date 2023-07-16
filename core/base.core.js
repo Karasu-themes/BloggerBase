@@ -4,7 +4,7 @@ const sass = require('sass');
 const postcss = require('postcss');
 const rollup = require('rollup');
 
-const INCLUDE_PATH = resolve(resolve(''), 'pages');
+const INCLUDE_PATH = resolve(resolve(''), 'blogger');
 const ASSETS_PATH = resolve(resolve(''), 'assets');
 
 
