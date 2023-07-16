@@ -4,6 +4,6 @@ module.exports = {
   themeUrl: "https://github.com/Karasu-themes/BloggerBase/tree/main/bundle",
   themeAuthor: "MarceloTLD",
   themeAuthorUrl: "https://github.com/marceloTLD",
-  themeVersion: "1.0.0",
+  themeVersion: "1.0.3",
   themeLicense: "Release under MIT License"
 }
