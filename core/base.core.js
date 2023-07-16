@@ -15,18 +15,20 @@ function fileLoader(pathFile) {
 // Devuelve en formato de array de objetos los datos de la directiva assets
 function getAssetsDirective(content) {
   const temp = [];
-  const matches = content.match(/@assets\((.*)\)/g);
+  const matches = content.match(/@assets\((.*)\)\;?/g);
 
   if (matches == null ?? matches.length == 0) return [];
 
   matches.forEach(n => {
     const path = n.match(/path="([^"]+)"/g) != null ? n.match(/path="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
+    const format = n.match(/format="([^"]+)"/g) != null ? n.match(/format="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
     const output = n.match(/output="([^"]+)"/g) != null ? n.match(/output="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
     const name = n.match(/name="([^"]+)"/g) != null ? n.match(/name="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
     const cdta = /cdta/g.test(n);
     temp.push({
       match: n,
       path: path.trim(),
+      format,
       output,
       name,
       cdta
@@ -66,12 +68,10 @@ async function resolveAssets(content, postcssPlugins, rollupPlugins) {
         plugins: rollupPlugins
       });
 
-      const { output } = await bundle.generate({ format: 'iife', name: asset.name || basename(pathFile).replace('.js', '') });
+      const { output } = await bundle.generate({ format: asset.format || 'iife', name: asset.name || basename(pathFile).replace('.js', '') });
       const [{ code }] = output;
 
-      if (asset.cdta) {
-        bundleCode = `//<![CDATA[\n${code.trim()}\n//]]>`;
-      } else { bundleCode = code.trim(); }
+      bundleCode =  asset.cdta ? `//<![CDATA[\n${code.trim()}\n//]]>` : code.trim();
 
       compiledContent = compiledContent.replace(asset.match, bundleCode);
 
