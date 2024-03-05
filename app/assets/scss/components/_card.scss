@@ -1,0 +1,141 @@
+// CARD
+.card {
+  $self: &;
+  padding: rem(24);
+  background-color: var(--wrapper-color);
+  color: var(--text-color);
+  border: 1px solid var(--light-color);
+  border-radius: $radius-lg;
+  transition: all $duration-100 ease-in-out;
+
+  // THUMBNAIL
+  &__thumbnail {
+    width: rem(64);
+    height: rem(64);
+    margin-right: rem(12);
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: $radius-sm;
+      aspect-ratio: 1/1;
+    }
+
+    @include query(xs) {
+      width: rem(96);
+      height: rem(96);
+    }
+
+    @include query(md) {
+      width: 100%;
+      height: auto;
+      margin-right: 0;
+      margin-bottom: rem(16);
+      img {
+        aspect-ratio: 16/11;
+      }
+    }
+  }
+
+  // HEADER
+  &__header {
+    margin-bottom: rem(12);
+  }
+
+  // TITLE
+  &__title {
+    font-size: $text-base;
+    font-weight: $weight-700;
+    transition: color $duration-100 ease-in-out;
+    text-wrap: balance;
+
+    a {
+      display: block;
+    }
+
+    &:hover {
+      color: var(--primary-color);
+    }
+
+    @include query(sm) {
+      font-size: $text-xl;
+    }
+
+    @include query(lg) {
+      font-size: $text-2xl;
+    }
+  }
+
+  // SNIPPETS
+  &__snippets {
+    font-size: $text-sm;
+    color: var(--text-color);
+    line-height: 1.5;
+    opacity: 0.85;
+    text-wrap: pretty;
+    font-weight: $weight-500;
+
+    @include query(lg) {
+      font-size: $text-base;
+    }
+
+    @include max-query(sm) {
+      display: none;
+    }
+  }
+
+  // META
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(16);
+    color: var(--text-color);
+    margin-top: rem(24);
+
+    svg {
+      width: rem(20);
+      height: rem(20);
+    }
+
+    span,
+    time {
+      font-size: $text-sm;
+      line-height: 1px;
+      display: flex;
+      align-items: center;
+      font-weight: $weight-500;
+      gap: rem(16);
+    }
+
+    @include max-query(md) {
+      display: none;
+    }
+  }
+
+  // HOVER
+  &:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
+  }
+
+  // MOBILE STYLE
+  @include max-query(md) {
+    display: flex;
+    align-items: center;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__header {margin-bottom: 0;}
+
+    &:has(img) {
+      #{$self}__body {
+        width: calc(100% - 96px - #{rem(12)});
+      }
+    }
+  }
+}

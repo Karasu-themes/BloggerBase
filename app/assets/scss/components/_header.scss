@@ -1,0 +1,141 @@
+// HEADER
+.hder {
+  margin-bottom: rem(48);
+
+  #hder {
+    position: relative;
+  }
+
+  &__upper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: rem(16) 0;
+
+    .action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: rem(16);
+
+      @include query(lg) {
+        #trigger-menu {
+          display: none;
+        }
+      }
+    }
+
+    button {
+      width: rem(48);
+      height: rem(48);
+      background: transparent;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: background $duration-200 ease-out;
+      display: grid;
+      place-content: center;
+      border-radius: $radius-md;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+      }
+
+      &:hover {
+        background-color: var(--light-color-100);
+      }
+
+      &#trigger-switch-theme {
+        svg:not(:first-child) {
+          display: none;
+        }
+
+        &[data-current-theme=dark] {
+          .moon {
+            display: block;
+          }
+
+          .sun {
+            display: none;
+          }
+        }
+
+        &[data-current-theme=light] {
+          .moon {
+            display: none;
+          }
+
+          .sun {
+            display: block;
+          }
+        }
+
+        &[data-current-theme=system] {
+          .moon {
+            display: none;
+          }
+
+          .sun {
+            display: none;
+          }
+        }
+      }
+
+    }
+
+    .search-box {
+      position: relative;
+
+      form {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        border-radius: $radius-md;
+        background: var(--light-color-100);
+        padding-right: rem(48);
+        width: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: all $duration-200 ease-in-out;
+
+        input {
+          width: 100%;
+          background-color: transparent;
+          height: rem(48);
+          border: 0;
+          outline: 0;
+          padding: 0 rem(16);
+          color: var(--text-color);
+          font-size: $text-sm;
+          font-weight: $weight-500;
+
+          &::placeholder {
+            color: rgba(var(--text-color-rgb), .7);
+          }
+        }
+
+        .close-search {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: rem(48);
+          height: rem(48);
+          cursor: pointer;
+        }
+      }
+
+
+
+      &.is-visible {
+        form {
+          width: rem(200);
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+    }
+  }
+}

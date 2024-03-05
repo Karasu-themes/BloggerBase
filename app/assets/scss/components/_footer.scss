@@ -1,0 +1,22 @@
+.footer {
+  margin-top: rem(42);
+  padding: rem(32);
+  text-align: center;
+
+  .copyrights {
+
+    font-weight: $weight-500;
+    color: var(--text-color);
+
+    a {
+      color: var(--primary-color);
+      transition: all $duration-100 ease-in-out;
+
+      &:hover {
+        color: var(--text-color);
+        text-decoration: underline;
+      }
+    }
+
+  }
+}

@@ -1,0 +1,102 @@
+@use 'sass:math';
+
+// Convierte un valor px a rem
+// @param {number} $value
+// @param {number} $base
+//
+// Modo de uso:
+// .element {
+//   font-size: rem(16); // 1rem
+// }
+//
+
+@function rem($value, $base: 16) {
+  $result: math.div($value, $base) + rem;
+  @return $result;
+}
+
+
+// Aplica la propiedad line-clamp de css a un elemento para truncar el texto por línea.
+//
+// @param {number} $lines - Número máximo de líneas a limitar. Por defecto se establece en 2 líneas
+//
+// Modo de uso:
+// .element {
+//   @include line-clamp(3);
+// }
+//
+
+@mixin line-clamp($lines: 2) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: #{$lines};
+}
+
+// Aplica un estilo en base al tamaño de la pantalla que sea igual o superior al valor pasado por parametro
+//
+// @param {string} $size - Tamaño de la pantalla dónde se mostrará el estilo. Por defecto el valor es "xs"
+//
+// Medidas de pantalla disponible
+// xs = 480px
+// sm = 640px
+// md = 768px
+// lg = 1024px
+// xl = 1280px
+// 2xl = 1400px
+// 3xl = 1536px
+//
+// Modo de uso:
+// .elemento {
+//   @include query("md") {
+//    color: red;
+//   }
+// }
+//
+@mixin query ($size: "xs") {
+  $current-screen: map-get($query-breakpoints, $size);
+
+  @media screen and (min-width: #{$current-screen}) {
+    @content;
+  }
+}
+
+
+// Aplica un estilo en base al tamaño de la pantalla que sea igual o inferior al valor pasado por parametro
+//
+// @param {string} $size - Tamaño de la pantalla dónde se mostrará el estilo. Por defecto el valor es "xs"
+//
+// Medidas de pantalla disponible
+// xs = 480px
+// sm = 640px
+// md = 768px
+// lg = 1024px
+// xl = 1280px
+// 2xl = 1400px
+// 3xl = 1536px
+//
+// Modo de uso:
+// .elemento {
+//   @include max-query("md") {
+//    color: red;
+//   }
+// }
+@mixin max-query ($size) {
+  $current-screen: map-get($query-breakpoints, $size);
+
+  @media screen and (max-width: #{$current-screen - 1px}) {
+    @content;
+  }
+}
+
+@mixin container {
+  width: 100%;
+
+  @include query(xl) {
+    max-width: rem(1200);
+  }
+
+  @include query("2xl") {
+    max-width: #{map-get($query-breakpoints, "2xl")};
+  }
+}

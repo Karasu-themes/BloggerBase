@@ -1,0 +1,75 @@
+// POST
+.post {
+
+  color: rgba(var(--text-color-rgb), .85);
+
+  // HEADER
+  &__header {
+    margin-bottom: rem(24);
+  }
+
+  // BODY
+  &__body {
+    @import '../base/post-format';
+  }
+
+  // LABELS
+  &__labels {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: rem(16);
+    a {
+      color: var(--primary-color);
+      font-weight: $weight-500;
+      font-size: $text-base;
+      line-height: 1;
+      &:not(:last-child) {margin-right: rem(16);}
+    }
+  }
+
+
+
+  // META
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(16);
+    color: var(--text-color);
+    margin-top: rem(24);
+
+    svg {
+      width: rem(20);
+      height: rem(20);
+    }
+
+    span,
+    time {
+      font-size: $text-sm;
+      line-height: 1px;
+      display: flex;
+      align-items: center;
+      font-weight: $weight-500;
+      gap: rem(16);
+    }
+    
+  }
+
+  // TITLE
+  &__title {
+    font-size: $text-2xl;
+    font-weight: $weight-900;
+    line-height: 1.2;
+    text-wrap: pretty;
+    color: var(--text-color);
+
+    @include query (lg) {
+      font-size: $text-4xl;
+    }
+  }
+
+  // FOOTER
+  &__footer {
+    margin-top: rem(32);
+  }
+}

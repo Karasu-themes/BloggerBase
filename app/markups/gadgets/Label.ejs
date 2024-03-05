@@ -1,0 +1,18 @@
+<b:defaultmarkup type='Label'>
+<b:includable id='main'>
+  <b:include name='@widget-class' />
+  <b:include name='widget-title' />
+  <b:tag expr:name='data:display contains "cloud" ? "div" : "ul"' class="wgt-label">
+    <b:class expr:name='"label-" + data:display' />
+    <b:loop var='label' values='data:labels'>
+      <b:tag cond='data:display contains "list"' name='li'>
+        <a expr:href='data:label.url'><data:label.name/>
+          <b:if cond='data:showFreqNumbers'>
+            <span class="label-count"><data:label.count/></span>
+          </b:if>
+        </a>
+      </b:tag>
+    </b:loop>
+  </b:tag>
+</b:includable>
+</b:defaultmarkup>

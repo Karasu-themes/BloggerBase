@@ -1,0 +1,28 @@
+<b:defaultmarkup type='PopularPosts'>
+  <b:includable id='main'>
+    <b:include name='@widget-class' />
+    <b:include name='widget-title' />
+    <div role='feed'>
+      <b:loop var='post' values='data:posts'>
+        <article class='wgt-popular' role='article'>
+          <figure class='wgt-popular__thumbnail'>
+            <b:include name='@image' data='{ 
+              src: data:post.featuredImage,
+              imageSize: "72",
+              imageParams: data:skin.vars.i_params,
+              imageRatio: "72:72"
+            }' />
+          </figure>
+          <div class="wgt-popular__body">
+            <header class="wgt-popular__header">
+              <h2 class="wgt-popular__title"><a expr:href='data:post.url'><data:post.title/></a></h2>
+            </header>
+          </div>
+          <footer class="wgt-popular__snippet">
+            <p><data:post.snippets.short/></p>
+          </footer>
+        </article>
+      </b:loop>
+    </div>
+  </b:includable>
+</b:defaultmarkup>

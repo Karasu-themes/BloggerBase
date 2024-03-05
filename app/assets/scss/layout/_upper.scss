@@ -1,0 +1,46 @@
+.bs-area .bs-area__wrapper.upper-area {
+
+  &:before {
+    background: #fff;
+    color: #27272a;
+    content: "Area: upper";
+    left: 16px;
+    margin-top: -24px;
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    position: absolute;
+    border-radius: 4px 4px 0 0;
+    top: 0;
+    border: 1px solid #e4e4e7;
+    border-bottom-color: #fff;
+  }
+
+  #hder.section {
+    overflow: hidden !important;
+    padding: 0;
+    border: 0 !important;
+    margin-bottom: 0 !important;
+
+    h4 {display: none;}
+
+    .widget {
+      width: 48.5%;
+      margin-bottom: 8px !important;
+      border: 1px solid #e4e4e7;
+      overflow: hidden;
+      border-radius: 4px !important;
+    }
+
+    .layout-widget-state {display: none !important;}
+    .layout-widget-description {margin-left: 0 !important;}
+    .layout-title {
+      font-weight: 700;
+      margin-left: 0 !important;
+    }
+    
+    .widget.Header {float: left;}
+    .widget.PageList {float: right;}
+  }
+
+}

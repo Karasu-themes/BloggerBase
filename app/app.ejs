@@ -1,0 +1,99 @@
+<html <%- htmlTags({
+  "b:css": false,
+  "b:js": true,
+  "b:defaultwidgetversion": 2,
+  "b:layoutsVersion": 3,
+  "expr:dir": 'data:blog.locale.languageDirection',
+  "expr:lang": 'data:blog.locale.language',
+  prefix: 'og: http://ogp.me/ns#' }) _%>>
+<!-- BloggerBase©karasu-themes | https://github.com/Karasu-themes/BloggerBase  -->
+<head>
+  <!-- Head -->
+  <b:include name='@u:head' />
+
+  <!-- Toggle between light/dark mode theme -->
+  <b:script src='./js/switchThemeColor.js' cdta/>
+
+  <b:skin>
+    @license;
+    @variables;
+    <b:style src='/scss/style.scss' />
+
+    /*
+    ** Variables css
+    *----------------------------------*/
+    <% if (prodMode){ %>
+      <b:style src='./root.css'/>
+      <% } else { %>  
+      <b:style src='/scss/style.root.scss' />
+    <% } %>
+  </b:skin>
+  
+  <b:if cond='data:view.isLayoutMode'>
+    <b:template-skin>
+      <b:style src='/scss/template-skin.scss' />
+    </b:template-skin>
+  </b:if>
+
+  <b:defaultmarkups>
+    <%# Common markups %>
+    <b:defaultmarkup type='Common'>
+      <%- include('./markups/common/head'); %>
+      <%- include('./markups/common/utils'); %>
+      <%- include('./markups/common/card'); %>
+    </b:defaultmarkup>
+    
+    <%# Gadgets _%>
+    <%- include('./markups/gadgets/Blog') %>
+    <%- include('./markups/gadgets/Header') %>
+    <%- include('./markups/gadgets/PageList') %>
+    <%- include('./markups/gadgets/PopularPosts') %>
+    <%- include('./markups/gadgets/FeaturedPost') %>
+    <%- include('./markups/gadgets/BlogSearch') %>
+    <%- include('./markups/gadgets/Label') %>
+  </b:defaultmarkups>
+  <% if (demoMode){ %>
+    <style>
+      .logo__text {color: var(--primary-color);}
+      .logo__text span {color: var(--text-color);}
+    </style>
+  <% } %>
+</head>
+
+<body>
+  <b:include name='@body-class' />
+
+  <b:area name='upper-area'>
+    <%- include('./areas/upper'); %>
+  </b:area>
+
+  <div class='bs-cont bs-cA bs-cP'>
+    <b:area name='main-area'>
+      <b:tag cond='data:view.isLayoutMode' name='div' class='bs-area__container'>
+        <main class='bs-main'>
+          <b:section id='blog'>
+            <b:widget type="Blog"/>
+          </b:section>
+        </main>
+    
+        <b:if cond="data:view.isSingleItem or data:view.isLayoutMode">
+          <aside class='bs-aside'>
+            <b:section id='sidebar'>
+              <b:widget type='BlogSearch' />
+              <b:widget type='Label' />
+              <b:widget type='FeaturedPost' />
+              <b:widget type='PopularPosts' title='Popular Posts' />
+            </b:section>
+          </aside>
+        </b:if>
+      </b:tag>
+    </b:area>
+  </div>
+
+  <%- include('./components/footer'); %>
+
+  <b:script src='./js/core.js' cdta/>
+
+</body>
+
+</html>

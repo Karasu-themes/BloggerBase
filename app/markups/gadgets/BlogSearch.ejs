@@ -1,0 +1,12 @@
+<b:defaultmarkup type='BlogSearch'>
+  <b:includable id='main'>
+    <b:include name="@widget-class"/>
+    <b:include name="widget-title"/>
+    <form expr:action='data:blog.searchUrl' class='wgt-blogSearch'>
+      <b:attr cond='not data:view.isPreview' name='target' value='_top'/>
+      <b:include name='urlParamsAsFormInput'/>
+      <input autocomplete='off' expr:aria-label='data:messages.searchThisBlog' expr:placeholder='data:messages.searchThisBlog' expr:value='data:view.isSearch ? data:view.search.query.escaped : ""' name='q' required=''/>
+      <b:include name='searchSubmit'/>
+    </form>
+  </b:includable>
+</b:defaultmarkup>

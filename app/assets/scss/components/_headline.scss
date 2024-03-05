@@ -1,0 +1,8 @@
+// HEADLINE
+.bs-headline {
+  margin-bottom: rem(24);
+  &__title {
+    font-size: $text-2xl;
+    letter-spacing: 1px;
+  }
+}

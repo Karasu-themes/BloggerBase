@@ -1,0 +1,37 @@
+// LOGO
+.logo {
+  color: var(--text-color);
+
+  &-wrapper {
+    max-width: rem(540);
+    margin: auto;
+    text-align: center;
+  }
+
+  &__text {
+    font-size: rem(48);
+    font-family: var(--bs-logo-font);
+    font-weight: $weight-900;
+
+    img {
+      width: auto;
+      height: 58px;
+    }
+
+    @include max-query(md) {
+      font-size: rem(32);
+    }
+  }
+
+  &-description {
+    font-size: rem(20);
+    font-weight: $weight-700;
+    margin-top: rem(16);
+    opacity: 0.85;
+    &:empty {display: none;}
+
+    @include max-query(md) {
+      font-size: rem(16);
+    }
+  }
+}

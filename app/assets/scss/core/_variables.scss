@@ -1,0 +1,61 @@
+// Breakpoints
+$query-breakpoints: (
+  "xs": 480px,
+  "sm": 640px,
+  "md": 768px,
+  "lg": 1024px,
+  "xl": 1280px,
+  "2xl": 1400px,
+  "3xl": 1536px
+);
+
+// Font size
+$text-xs: rem(12);
+$text-sm: rem(14);
+$text-base: rem(16);
+$text-lg: rem(18);
+$text-xl: rem(20);
+$text-2xl: rem(24);
+$text-3xl: rem(32);
+$text-4xl: rem(42);
+$text-5xl: rem(54);
+
+// Font weight
+$weight-300: 300;
+$weight-400: 400;
+$weight-500: 500;
+$weight-600: 600;
+$weight-700: 700;
+$weight-900: 900;
+
+// Transition
+$duration-100: 100ms;
+$duration-200: 200ms;
+$duration-300: 300ms;
+$duration-500: 500ms;
+$duration-1s: 1s;
+$duration-2s: 2s;
+$duration-3s: 3s;
+
+// Radius
+$radius: rem(4); // extra small
+$radius-sm: rem(8); // small
+$radius-md: rem(12); // medium
+$radius-lg: rem(16); // large
+$radius-xl: rem(28); // extra large
+$radius-full: 99999px; // full
+$radius-none: 0; // none
+
+// Colors
+$primary-color: #6366F1;
+$secondary-color: #e11d48;
+$body-color: #fff;
+$wrapper-color: #fff;
+$text-color: #1F2937;
+$light-color: #E5E7EB;
+$light-color-100: #f4f4f5;
+
+// Typography
+$base-font: 'Roboto';
+$logo-font: 'Roboto';
+$titles-font: 'Roboto';

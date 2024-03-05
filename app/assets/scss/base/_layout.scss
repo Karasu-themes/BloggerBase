@@ -1,0 +1,88 @@
+.bs-cont {
+  @include container;
+
+  &.bs-cA {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &.bs-cP {
+    padding-left: rem(16);
+    padding-right: rem(16);
+  }
+
+  @at-root .article-page & {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+}
+
+.bs-main,
+.bs-aside {
+  width: 100%;
+
+  .widget:not(:last-child) {
+    margin-bottom: rem(42);
+  }
+}
+
+.bs-main {
+  margin-bottom: rem(36);
+}
+
+@include query(xl) {
+  .bs-main {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .article-page .bs-cont .bs-main {
+    width: calc(100% - var(--bs-aside) - var(--bs-gap));
+  }
+
+  .bs-aside {
+    width: var(--bs-aside);
+    position: sticky;
+    top: rem(16);
+  }
+}
+
+// wrapper
+.bs-wrapper {
+  position: relative;
+
+  // Modo caja
+  &.boxMode {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--wrapper-color);
+    @include container;
+  }
+
+}
+
+// Items
+.bs-items {
+  --xs-col: 1;
+  --md-col: 2;
+  --lg-col: 3;
+  --col: var(--xs-col, 1);
+  --gap: #{rem(24)};
+
+  display: grid;
+  grid-template-columns: repeat(var(--col), minmax(0, 1fr));
+  align-items: start;
+  gap: var(--gap);
+
+  @include query(md) {
+    --col: var(--md-col, 2);
+  }
+
+  @include query(lg) {
+    --col: var(--lg-col, 3);
+  }
+
+}

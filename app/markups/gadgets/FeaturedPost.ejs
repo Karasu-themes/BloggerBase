@@ -1,0 +1,32 @@
+<b:defaultmarkup type='FeaturedPost'>
+  <b:includable id='main'>
+    <%# Don't show the gadget if the current article has the same id! %>
+    <b:attr cond='data:posts any (p =>p.id == data:view.postId)' name='style' value='display: none;' />
+    <b:if cond='data:posts any (p =>p.id != data:view.postId)'>
+      <b:include name='@widget-class' />
+      <b:include name='widget-title' />
+      <div role='feed'>
+        <b:loop var='post' values='data:posts'>
+          <article class='wgt-featured' role='article'>
+            <figure class='wgt-featured__thumbnail'>
+              <b:include name='@image' data='{ 
+                src: data:post.featuredImage,
+                imageSize: "200",
+                imageParams: data:skin.vars.i_params,
+                imageRatio: "16:10"
+              }' />
+            </figure>
+            <div class="wgt-featured__body">
+              <header class="wgt-featured__header">
+                <h2 class="wgt-featured__title"><a expr:href='data:post.url'><data:post.title/></a></h2>
+              </header>
+            </div>
+            <footer class="wgt-featured__snippet">
+              <p><data:post.snippets.short/></p>
+            </footer>
+          </article>
+        </b:loop>
+      </div>
+    </b:if>
+  </b:includable>
+</b:defaultmarkup>

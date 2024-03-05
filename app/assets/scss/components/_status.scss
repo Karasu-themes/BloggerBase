@@ -1,0 +1,16 @@
+.status-message {
+  background-color: var(--light-color-100);
+  color: var(--text-color);
+  max-width: rem(720);
+  width: 90%;
+  margin: auto;
+  padding: rem(24);
+  border-radius: $radius-lg;
+  font-size: $text-sm;
+  text-align: center;
+  font-weight: $weight-500;
+
+  @at-root .search-page & {
+    margin-bottom: rem(24);
+  }
+}

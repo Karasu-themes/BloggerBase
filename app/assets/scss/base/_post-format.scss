@@ -1,0 +1,116 @@
+// FORMAT.links
+a {
+  font-weight: $weight-700;
+  color: var(--primary-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// FORMAT.image
+img {
+  width: auto;
+  max-width: 100%;
+  border-radius: $radius-sm;
+}
+
+// FORMAT.headers
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.35;
+  text-wrap: pretty;
+  color: var(--text-color);
+}
+
+h2 {
+  font-size: $text-2xl;
+  margin-bottom: rem(32);
+
+  @include query (lg) {
+    font-size: $text-3xl;
+  }
+}
+
+h3 {
+  font-size: $text-xl;
+  padding-left: rem(16);
+  border-left: 4px solid var(--light-color);
+  margin-bottom: rem(24);
+
+  @include query (lg) {
+    font-size: $text-2xl;
+  }
+}
+
+h4,
+h5,
+h6 {
+  font-size: $text-lg;
+  margin-bottom: rem(16);
+}
+
+// FORMAT.paragraph
+p {
+  line-height: 1.6;
+  font-weight: $weight-500;
+
+  &+p,
+  &:first-of-type {
+    margin-bottom: rem(16);
+  }
+
+  &+h2,
+  &+h3,
+  &+h4,
+  &+h5,
+  &+h6 {
+    margin-top: rem(48);
+  }
+}
+
+// FORMAT.list
+ul, ol {
+  padding: rem(16);
+  margin: 0 rem(16);
+
+  li {
+    padding: 0 rem(8);
+    &:not(:last-child) {
+      margin-bottom: rem(8);
+    }
+  }
+}
+
+ol li {list-style: decimal;}
+ul li {list-style: disc;}
+
+// FORMAT.blockquote
+blockquote {
+  padding: rem(24);
+  font-size: $text-lg;
+  font-weight: $weight-400;
+  background-color: var(--light-color-100);
+  border-radius: $radius;
+  margin: rem(24) 0;
+  position: relative;
+}
+
+// FORMAT.mark
+mark {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+// FORMAT.pre
+pre {
+  white-space: normal;
+  background: var(--light-color);
+  padding: 16px;
+  margin: 32px 0;
+  display: block;
+  overflow: auto;
+}

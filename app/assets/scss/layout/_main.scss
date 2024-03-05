@@ -1,0 +1,39 @@
+.bs-area .bs-area__wrapper.main-area {
+
+  &:before {
+    background: #fff;
+    color: #27272a;
+    content: "Area: main";
+    left: 16px;
+    margin-top: -24px;
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    position: absolute;
+    border-radius: 4px 4px 0 0;
+    top: 0;
+    border: 1px solid #e4e4e7;
+    border-bottom-color: #fff;
+  }
+  
+
+  .bs-area__container {
+    overflow: hidden;
+    padding-bottom: 8px;
+
+    .bs-main {
+      width: 49%;
+      float: left;
+      margin: 16px 0;
+    }
+    
+    .bs-aside {
+      width: 49%;
+      float: right;
+      margin-top: 16px;
+      margin-bottom: -16px;
+    }
+    
+  }
+
+}
