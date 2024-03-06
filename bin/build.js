@@ -16,8 +16,6 @@ export default function build(program, route) {
       const mode = options.mode ?? "production";
       const config = await getThemeConfig(route);
 
-      console.log(options);
-
       // Comprobamos que la capreta ./app exista
       if (!fs.existsSync(path.resolve(route, 'app'))) {
         console.log('No existe la carpeta ./app');
