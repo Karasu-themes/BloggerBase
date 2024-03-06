@@ -1,20 +1,18 @@
 <%#
 Post
-@version 1.0
-@since 2.0.0
-Estos datos se aplicarán únicamente en las entradas individuales de blogger:
-- Entradas
-- Páginas
+Estos datos se aplicarán únicamente en las entradas individuales de blogger (page, post):
 %>
 <b:class name='post' />
 <%# Post header#START _%>
 <header class='post__header'>
   <%# Post labels _%>
-  <div class="post__labels">
-    <b:loop var='label' values='data:post.labels'>
-      <a expr:href='data:label.url' expr:title='data:label.name'><data:label.name/></a>
-    </b:loop>
-  </div>
+  <b:if cond='data:view.isPost'>
+    <div class="post__labels">
+      <b:loop var='label' values='data:post.labels'>
+        <a expr:href='data:label.url' expr:title='data:label.name'><data:label.name/></a>
+      </b:loop>
+    </div>
+  </b:if>
 
   <%# Post title _%>
   <h1 class='post__title'><data:post.title/></h1>

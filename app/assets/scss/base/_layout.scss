@@ -11,11 +11,14 @@
     padding-right: rem(16);
   }
 
-  @at-root .article-page & {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  @at-root {
+    .article-page &,
+    .page & {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
   }
 
 }
@@ -39,7 +42,8 @@
     margin-bottom: 0;
   }
 
-  .article-page .bs-cont .bs-main {
+  .article-page .bs-cont .bs-main,
+  .page .bs-cont .bs-main {
     width: calc(100% - var(--bs-aside) - var(--bs-gap));
   }
 
