@@ -74,39 +74,9 @@
     /*
     ** Variables css
     *----------------------------------*/
-    
-      :root {
-    /*! Colors */
-    --primary-color: $(c.primary);
-    --primary-color-rgb: $(c.primary.red), $(c.primary.green), $(c.primary.blue);
-    --body-color: $(c.body);
-    --wrapper-color: $(c.wrapper);
-    --text-color: $(c.text);
-    --text-color-rgb: $(c.text.red), $(c.text.green), $(c.text.blue);
-    --light-color: $(c.light);
-    --light-color-100: $(c.light.soft);
-
-    /*! Typography */
-    --bs-global-font: $(f.base.family), 'Roboto';
-    --bs-logo-font: $(f.logo.family), 'Roboto';
-
-    /*! Layout */
-    --bs-gap: 42px;
-    --bs-aside: 360px;
-}
-
-[data-theme=dark] {
-  /*! Colors */
-  --primary-color: $(dc.primary);
-  --primary-color-rgb: $(dc.primary.red), $(dc.primary.green), $(dc.primary.blue);
-  --body-color: $(dc.body);
-  --wrapper-color: $(dc.wrapper);
-  --text-color: $(dc.text);
-  --text-color-rgb: $(dc.text.red), $(dc.text.green), $(dc.text.blue);
-  --light-color: $(dc.light);
-  --light-color-100: $(dc.light.soft);
-}
       
+      :root{/*! Colors */--primary-color: #6366F1;--primary-color-rgb: 99, 102, 241;--secondary-color: #e11d48;--body-color: #fff;--wrapper-color: #fff;--text-color: #1F2937;--text-color-rgb: 31, 41, 55;--light-color-100: #f4f4f5;--light-color: #E5E7EB;/*! Typography */--bs-global-font: Roboto;--bs-logo-font: Roboto;--bs-titles-font: Roboto;/*! Layout */--bs-gap: 42px;--bs-aside: 360px}[data-theme=dark]{/*! Colors */--primary-color: #8384d8;--primary-color-rgb: 131, 132, 216;--secondary-color: #e11d48;--body-color: #202328;--wrapper-color: #2f3238;--text-color: #e7e7e7;--text-color-rgb: 231, 231, 231;--light-color-100: #383a40;--light-color: #4c4f56}
+    
   ]]></b:skin>
   
   <b:if cond="data:view.isLayoutMode">
@@ -423,7 +393,7 @@
     <b:class name="logo-wrapper"/>
     <div class="logo">
       
-        <h1 class="logo__text"><a expr:href="data:blog.homepageUrl" class="logo__link"><data:blog.title/></a></h1>
+        <h1 class="logo__text"><a expr:href="data:blog.homepageUrl" class="logo__link">Blogger<span>/base</span></a></h1>
       
     </div>
     <p class="logo-description">
@@ -539,6 +509,11 @@
 </b:includable>
 </b:defaultmarkup>
   </b:defaultmarkups>
+  
+    <style>
+      .logo__text {color: var(--primary-color);}
+      .logo__text span {color: var(--text-color);}
+    </style>
   
 </head>
 
