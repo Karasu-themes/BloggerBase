@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { fileURLToPath } from 'url';
 import path from 'node:path';
+import chalk from 'chalk';
 import { themeConfig } from '../theme.config.js';
 const fsP = fs.promises;
 
@@ -30,7 +31,7 @@ export function writeBuild(content, config = {}, DIR = './dist') {
 export function timeStamp(currtime) {
   const now = currtime;
   const time = now.toLocaleTimeString();
-  return `[${time}]`;
+  return chalk.whiteBright(`[${time}]`);
 }
 
 export function parseParams() {
