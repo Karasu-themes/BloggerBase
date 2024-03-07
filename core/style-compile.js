@@ -17,7 +17,7 @@ export async function compileStyles(content, lang = "css", scss_style = "compres
     return sassFile.css;
 
     // postcss
-  } else if (lang === "pcss") {
+  } else if (lang === "pcss" || lang === "css") {
     const pcss = await postcss(plugins).process(content, { from: undefined });
 
     return pcss.css;
