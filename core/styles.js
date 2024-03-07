@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import * as cheerio from 'cheerio';
 import { getPostcssConfig, tagStyle } from './utils.js';
 import { cssBuild } from './style-directive.js';
@@ -12,11 +13,14 @@ export default async function styles(content) {
   for (const style of $('b\\:style')) {
     const attribute = style.attribs;
     const src = attribute.src ?? false;
-    const cdta = attribute.cdta ? true : false;
+    const cdta =  'cdta' in attribute;
+    const render = 'render' in attribute;
     const scss_style = attribute.output ?? "compressed";
-    const render = attribute.render ? true : false;
     let compiled='';
     
+    // Avisamos que una etiqueta b:style no tiene el atributo src para funcionar
+    if (!src) { console.log(`${chalk.yellowBright(`[warning]: An ${chalk.bold("<b:style>")} tag does not have the src (required) attribute`)}`); }
+
     if (src) {
       const lang = extname(src).replace('.', '');
       compiled = await cssBuild(src, {
