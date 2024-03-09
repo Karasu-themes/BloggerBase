@@ -23,11 +23,11 @@
 
 ## Característica destacadas
 
-✔ Motor de plantilla gracias a `ejs`
-✔ Compila código javascript y css directamente en los archivos `*.ejs`
-✔ Plantillas de ejemplos con excelente rendimiento
-✔ Soporte para plugins de **rollup** y **postcss**
-✔ Eso y mucho más en camino... 
+- Motor de plantilla gracias a `ejs`
+- Compila código javascript y css directamente en los archivos `*.ejs`
+- Plantillas de ejemplos con excelente rendimiento
+- Soporte para plugins de **rollup** y **postcss**
+- Eso y mucho más en camino... 
 
 ------
 
