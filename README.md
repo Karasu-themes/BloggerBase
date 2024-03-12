@@ -52,15 +52,7 @@ trabajar en tu próxima plantilla de blogger.
 
 ### Plantilla base
 
-Por defecto cuando creamos nuestra plantilla con el comando `create-blogger-theme`, este creará una
-base en blanco lista para poder desarrollar nuestra plantilla. Si tu intención es usar como punto de partida la plantilla por defecto
-de BloggerBase [ver demo arriba](#), debes ejecutar el siguiente comando:
-
-```
-npx create-blogger-theme my-awesome-template --template base
-```
-
-Una vez ejecutado el comando se creará el proyecto con la plantilla por defecto de BloggerBase lista para modificar y/o usar. Recuerda instalar las dependencias antes de ejecutar algún comando.
+[**Ichiban**](https://github.com/Karasu-themes/ichiban) es una plantilla básica y punto de partida creada usando BloggerBase. Ideal para tener de referencia y no tener que empezar desde cero.
 
 ### Scripts de desarrollo
 
