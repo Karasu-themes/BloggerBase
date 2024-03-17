@@ -1,6 +1,6 @@
 {
   "name": "bloggerbase",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "A basic tool for building blogger template based on ejs",
   "type": "module",
   "repository": {
@@ -35,7 +35,6 @@
     "ejs": "3.1.9",
     "postcss": "8.4.31",
     "rollup": "4.5.1",
-    "rollup-plugin-esbuild": "6.1.0",
     "sass": "1.69.5"
   },
   "dependencies": {
