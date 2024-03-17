@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import chokidar from 'chokidar';
 import compiler from '../core/compiler.js';
-import { writeBuild, getThemeConfig, getMode } from '../core/utils.js';
+import { writeBuild, getThemeConfig, getMode, getPackageJson } from '../core/utils.js';
 
 export default function start(program, route) {
 
@@ -17,6 +17,7 @@ export default function start(program, route) {
       const entryPointApp = path.join(path.resolve(route, 'app'), 'app.ejs');
       const mode = opts.mode ?? "development";
       const config = await getThemeConfig(route);
+      const { version } = getPackageJson();
 
       const watcher = chokidar.watch(['./app/**/*.{ejs,js,scss,sass,css}'], {
         ignoreInitial: true,
@@ -24,7 +25,7 @@ export default function start(program, route) {
         persistent: true
       });
 
-      console.log(`${bb(`BloggerBase | version 2.0.0`)}\nCurrent mode: ${chalk.bold(mode)}`);
+      console.log(`${bb(`BloggerBase | version ${version}`)}\nCurrent mode: ${chalk.bold(mode)}`);
       console.log(`Waiting for changes in the ${chalk.bold("./app")} folder.\n`);
 
       function startWatcher() {

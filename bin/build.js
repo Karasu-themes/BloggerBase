@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'node:fs';
 import path from 'node:path';
 import compiler from '../core/compiler.js';
-import { writeBuild, getThemeConfig, getMode } from '../core/utils.js';
+import { writeBuild, getThemeConfig, getMode, getPackageJson } from '../core/utils.js';
 
 export default function build(program, route) {
 
@@ -15,6 +15,7 @@ export default function build(program, route) {
       const entryPointApp = path.join(path.resolve(route, 'app'), 'app.ejs');
       const mode = options.mode ?? "production";
       const config = await getThemeConfig(route);
+      const { version } = getPackageJson();
 
       // Comprobamos que la capreta ./app exista
       if (!fs.existsSync(path.resolve(route, 'app'))) {
@@ -28,7 +29,7 @@ export default function build(program, route) {
         process.exit(1);
       }
 
-      console.log(`${bb(`BloggerBase | version 2.0.0 \n`)}`);
+      console.log(`${bb(`BloggerBase | version ${version} \n`)}`);
 
       const compiled = await compiler(entryPointApp, {
         ...getMode(mode),
