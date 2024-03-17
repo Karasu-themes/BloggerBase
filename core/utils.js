@@ -128,6 +128,16 @@ export async function getRollupConfig(route) {
   return config;
 }
 
+export function getPackageJson () {
+  const file = path.resolve(dirname(),"../", "package.json");
+  if (fs.existsSync(file)) {
+    const packageFile = fs.readFileSync(file, 'utf8');
+    return JSON.parse(packageFile);
+  }
+
+  return {};
+}
+
 export function getMode(mode) {
   return {
     mode: mode,
