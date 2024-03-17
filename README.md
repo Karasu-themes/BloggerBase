@@ -13,7 +13,7 @@
 
 <p align="center" dir="auto">
     <a href="https://github.com/Karasu-themes/BloggerBase/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Karasu-themes/BloggerBase" alt="License"></a>
-    <span><img src="https://img.shields.io/npm/v/bloggerbase?color=green
+    <span><img src="https://img.shields.io/npm/v/bloggerbase
     " alt="NPM Version" /></span>
 </p>
 
@@ -54,7 +54,7 @@ trabajar en tu próxima plantilla de blogger.
 
 [**Ichiban**](https://github.com/Karasu-themes/ichiban) es una plantilla básica y punto de partida creada usando BloggerBase. Ideal para tener de referencia y no tener que empezar desde cero.
 
-### Scripts de desarrollo
+### Comandos npm
 
 BloggerBase cuenta con tres comandos npm que nos permitirán trabajar con nuestra plantilla:
 
@@ -91,7 +91,6 @@ Para trabajar nuestros estilos y código de javascript, contamos con dos etiquet
 
 ### b:style
 
-
 La etiqueta `<b:style/>` nos permitirá compilar y/o usar nuestro `css`, `scss` o `pcss`. Para usarla es tan simple como ubicar la etiqueta anteriormente mencionada en alguna parte en nuestros archivos **`*.ejs`**:
 
 ```xml
@@ -126,7 +125,7 @@ Esta etiqueta tiene los siguientes atributos para poder utilizar:
 
 Tanto `b:script` y `b:style` tienen de punto de entrada la carpeta `assets` para encontrar los archivos **js, scs, css, pcss** que necesitemos al momento de usar alguna de las etiquetas antes mencionadas
 
-## Consideraciones
+### Consideraciones
 
 Tanto **rollup** cómo **postcss** podrían o no soportar algunos plugins por el momento.
 
