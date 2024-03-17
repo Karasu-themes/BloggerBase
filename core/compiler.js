@@ -27,7 +27,7 @@ export default async function compiler(APP_DIR = false, cfg = {}) {
   }
   let compiled = '';
 
-  console.log(`${timeStamp(new Date())}: ${chalk.cyan("compiling ...")}`);
+  const startTime = new Date();
   
   compiled = ejs.render(content, config, { filename: APP_PATH });
 
@@ -62,8 +62,9 @@ export default async function compiler(APP_DIR = false, cfg = {}) {
     const GET_CONTENT = readFileSync(VAR_APP_PATH, 'utf8');
     return GET_CONTENT ? ejs.render("/*"+ GET_CONTENT.trim() + " \n*/\n", config, { filename: APP_PATH, rmWhitespace: false }) : "";
   });
-
-  console.log(`${timeStamp(new Date())}: ${chalk.green("compiled ✔")}`);
+  
+  const endTime = new Date();
+  console.log(`Built in ${chalk.green(timeStamp(startTime, endTime))}`);
 
   return `<?xml version='1.0' encoding='UTF-8' ?>\n<!DOCTYPE html>\n${compiled}`;
 }

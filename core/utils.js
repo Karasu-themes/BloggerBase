@@ -28,10 +28,9 @@ export function writeBuild(content, config = {}, DIR = './dist') {
   fs.writeFileSync(`${DIR}/${theme.outputName ?? "blogger-base"}@${theme.version}.xml`, content, 'utf8');
 }
 
-export function timeStamp(currtime) {
-  const now = currtime;
-  const time = now.toLocaleTimeString();
-  return chalk.whiteBright(`[${time}]`);
+export function timeStamp(stime, etime) {
+  const time = etime.getTime() - stime.getTime();
+  return `${time}ms`;
 }
 
 export function parseParams() {
