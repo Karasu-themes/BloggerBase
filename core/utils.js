@@ -102,7 +102,7 @@ export async function getPostcssConfig(route) {
 
     const { default: currentConfig } = await import(`file://${file}`);
 
-    config = {...config, ...currentConfig};
+    config = { ...config, ...currentConfig };
   }
 
   return config;
@@ -122,7 +122,7 @@ export async function getRollupConfig(route) {
 
     const { default: currentConfig } = await import(`file://${file}`);
 
-    config = {...config, ...currentConfig};
+    config = { ...config, ...currentConfig };
   }
 
   return config;
@@ -144,5 +144,23 @@ export function getMode(mode) {
     devMode: (mode ?? "development") == "development",
     demoMode: (mode ?? "") == "demo",
     prodMode: (mode ?? "") == "production",
+  }
+}
+
+export function btagSelector(content, tagName) {
+  const regex = new RegExp(`<${tagName}(.*)?\/>`, 'g');
+  return content.match(regex) ?? [];
+}
+
+export function btagParams(tag) {
+  const src = tag.match(/src="([^"]+)"/g) != null ? tag.match(/src="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
+  const format = tag.match(/format="([^"]+)"/g) != null ? tag.match(/format="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
+  const output = tag.match(/output="([^"]+)"/g) != null ? tag.match(/output="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
+  const name = tag.match(/name="([^"]+)"/g) != null ? tag.match(/name="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
+  const cdta = /cdta/g.test(tag);
+  const render = /render/g.test(tag);
+
+  return {
+    src, format, output, name, cdta, render
   }
 }
