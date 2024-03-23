@@ -1,39 +1,30 @@
-import * as cheerio from 'cheerio';
 import { rollup } from 'rollup';
 import path from 'node:path';
-import { getRollupConfig } from './utils.js';
+import { getRollupConfig, btagSelector, btagParams } from './utils.js';
 
 const ROOT_ASSET = path.resolve('./app/assets/');
 
 export default async function scripts(content) {
-
-  const $ = cheerio.load(content, { xmlMode: true, decodeEntities: false });
+  let html=content;
   const rollupConfig = await getRollupConfig(process.env.PWD);
+  const bscripts = btagSelector(content, 'b:script');
 
-  for (const script of $('b\\:script')) {
-    const attributes = script.attribs;
-    const pathFile = attributes.src ?? false;
+  for (const bscript of bscripts) {
+    const params = btagParams(bscript);
+    const pathFile = params.src ?? false;
+    const bundle = await rollup({
+      input: path.resolve(ROOT_ASSET + "/" + pathFile),
+      plugins: [...rollupConfig.plugins]
+    });
 
-    if (pathFile) {
+    const { output } = await bundle.generate({ 
+      format: params.format || "iife", 
+      name: params.name ?? path.basename(pathFile).replace('.js', '') 
+    });
+    const [{ code }] = output;
 
-      const format = attributes.format ?? "iife";
-      const cdta = attributes.cdta == '' ? true : false;
-      const name = attributes.name ?? path.basename(pathFile).replace('.js', '');
-
-      const bundle = await rollup({
-        input: path.resolve(ROOT_ASSET + "/" + pathFile),
-        plugins: [...rollupConfig.plugins]
-      });
-
-      const { output } = await bundle.generate({ format, name });
-      const [{ code }] = output;
-
-      $(script).replaceWith(`<script>\n${cdta ? `//<![CDATA[\n${code.trim()}\n//]]>` : code.trim()}</script>`);
-    }
-
+    html=html.replace(bscript, `<script>\n${params.cdta ? `//<![CDATA[\n${code.trim()}\n//]]>` : code.trim()}</script>`)
   }
 
-  const result = $.html();
-
-  return result;
+  return html;
 }
