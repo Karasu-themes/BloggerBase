@@ -1,8 +1,6 @@
 import chalk from 'chalk';
-import * as cheerio from 'cheerio';
 import { getPostcssConfig, tagStyle, btagSelector, btagParams } from './utils.js';
 import { cssBuild } from './style-directive.js';
-import { themeConfig } from '../theme.config.js';
 import { extname } from 'node:path';
 
 export default async function styles(content) {
@@ -30,10 +28,8 @@ export default async function styles(content) {
 
     if (params.render && params.src) {
       html=html.replace(bstyle, `${tagStyle(params.cdta, compiled.trim())}`);
-      // $(style).replaceWith(`${tagStyle(cdta, compiled.trim())}`);
-    } {
+    } else {
       html=html.replace(bstyle, compiled.trim());
-      // else $(style).replaceWith(`${compiled.trim()}`);
     }
   }
 
