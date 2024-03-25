@@ -1,8 +1,9 @@
-import * as sass from 'sass';
+import fs from 'node:fs';
 import path from 'node:path';
+import * as sass from 'sass';
 import postcss from 'postcss';
 
-export async function compileStyles(content, lang = "css", scss_style = "compressed", plugins) {
+async function compileStyles(content, lang = "css", scss_style = "compressed", plugins) {
   // scss
   if (lang === "scss") {
     const sassFile = await sass.compileStringAsync(content, {
@@ -27,4 +28,17 @@ export async function compileStyles(content, lang = "css", scss_style = "compres
 
     return content;
   }
+}
+
+function loadFileSync ( pathFile ) {
+  if (fs.existsSync(pathFile)) return fs.readFileSync( pathFile, 'utf8' );
+  return "";
+}
+
+export default async function compileCss( srcFile, {lang, style, plugins}) {
+  const pathFile = path.join(path.resolve('./app/assets/'), srcFile);
+  const fileData = loadFileSync(pathFile);
+  const compiled = await compileStyles(fileData, lang, style, plugins);
+
+  return compiled
 }
