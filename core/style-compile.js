@@ -5,17 +5,20 @@ import postcss from 'postcss';
 
 async function compileStyles(content, lang = "css", scss_style = "compressed", plugins) {
   // scss
-  if (lang === "scss") {
+  if (lang === "scss" || lang === "sass") {
     const sassFile = await sass.compileStringAsync(content, {
       loadPaths: [
         path.resolve('./app/assets/'),
         path.resolve('./app/assets/css/'),
-        path.resolve('./app/assets/scss/')
+        path.resolve('./app/assets/scss/'),
+        path.resolve('./app/assets/sass/')
       ],
       style: scss_style
     });
 
-    return sassFile.css;
+    const compiledScss = await postcss(plugins).process(sassFile.css, { from: undefined });
+
+    return compiledScss.css;
 
     // postcss
   } else if (lang === "pcss" || lang === "css") {
@@ -25,7 +28,6 @@ async function compileStyles(content, lang = "css", scss_style = "compressed", p
 
     // CSS
   } else {
-
     return content;
   }
 }
