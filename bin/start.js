@@ -5,7 +5,7 @@ import chokidar from 'chokidar';
 import compiler from '../core/compiler.js';
 import { writeBuild, getThemeConfig, getMode, getPackageJson } from '../core/utils.js';
 
-export default function start(program, route) {
+export default function start(program, { route, folderName }) {
 
   const tempFolder = path.resolve(route, ".temp");
   const bb = chalk.hex('#6366f1').bold;
@@ -14,7 +14,7 @@ export default function start(program, route) {
     .description('Iniciamos el modo de desarrollo')
     .option('-m, --mode <mode>', 'Modo de uso')
     .action(async (opts) => {
-      const entryPointApp = path.join(path.resolve(route, 'app'), 'app.ejs');
+      const entryPointApp = path.join(path.resolve(route, folderName), 'app.ejs');
       const mode = opts.mode ?? "development";
       const config = await getThemeConfig(route);
       const { version } = getPackageJson();
@@ -26,7 +26,7 @@ export default function start(program, route) {
       });
 
       console.log(`${bb(`BloggerBase | version ${version}`)}\nCurrent mode: ${chalk.bold(mode)}`);
-      console.log(`Waiting for changes in the ${chalk.bold("./app")} folder.\n`);
+      console.log(`Waiting for changes in the ${chalk.bold(`./${folderName}`)} folder.\n`);
 
       function startWatcher() {
         const compiled = compiler(entryPointApp, {
