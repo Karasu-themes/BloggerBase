@@ -33,22 +33,6 @@ export function timeStamp(stime, etime) {
   return `${time}ms`;
 }
 
-export function parseParams() {
-  // Obtener los argumentos de la línea de comandos
-  const args = process.argv.slice(2);
-
-  // Definir un objeto para almacenar los argumentos como pares clave-valor
-  const params = {};
-
-  // Iterar sobre los argumentos y parsearlos
-  args.forEach(arg => {
-    const [key, value] = arg.split('=');
-    params[key.replace('--', '')] = value || true;
-  });
-
-  return params;
-}
-
 export function dirname() {
   return path.dirname(fileURLToPath(import.meta.url));
 }
