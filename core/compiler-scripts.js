@@ -2,11 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { rollup } from 'rollup';
 import { minify } from "terser";
-import NodeCache from 'node-cache';
 import { CONFIG } from './config.js';
 import { btagParams, getRollupConfig } from "./utils.js";
-
-const stylesCache = new NodeCache();
 
 export default async function compilerScripts(content, opts = {}) {
   let scripts = content;
