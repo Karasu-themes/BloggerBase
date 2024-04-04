@@ -1,31 +1,19 @@
 import fs from 'node:fs';
-import { fileURLToPath } from 'url';
 import path from 'node:path';
-import chalk from 'chalk';
+import { fileURLToPath } from 'url';
 import { themeConfig } from '../theme.config.js';
-const fsP = fs.promises;
 
-export async function loadFile(pathFile) {
-  const fileContent = await fsP.readFile(pathFile, 'utf8');
-  return fileContent;
-}
-
-export function tagStyle(cdta, content) {
-  return cdta ? `<style><![CDATA[\n${content.trim()}\n]]>\n</style>` : `<style>\n${content.trim()}\n</style>`;
+export function getEntryPointApp(route, folderName) {
+  let getEntryPointApp = fs.readdirSync(path.resolve(route, folderName));
+  getEntryPointApp = getEntryPointApp.filter(n => {
+    return /app\.(xml|njk|html)/g.test(n)
+  });
+  return getEntryPointApp[0] ?? "app.njk";
 }
 
 export function writeBuild(content, config = {}, DIR = './dist') {
-  const { theme } = config;
-
-  // Revisamos si el directorio ./dist no existe
-  if (!fs.existsSync(DIR)) {
-
-    // Si no existe, la creamos. :D
-    fs.mkdirSync(DIR);
-  }
-
-  // Guardamos el archivo
-  fs.writeFileSync(`${DIR}/${theme.outputName ?? "blogger-base"}@${theme.version}.xml`, content, 'utf8');
+  if (!fs.existsSync(DIR)) fs.mkdirSync(DIR);
+  fs.writeFileSync(`${DIR}/${config.outputName ?? "blogger-base"}@${config.version}.xml`, content, 'utf8');
 }
 
 export function timeStamp(stime, etime) {
@@ -33,6 +21,10 @@ export function timeStamp(stime, etime) {
   return `${time}ms`;
 }
 
+/**
+ * Get the current directory
+ * @returns String
+ */
 export function dirname() {
   return path.dirname(fileURLToPath(import.meta.url));
 }
@@ -55,11 +47,14 @@ export function mergeObj(bobj, nobj) {
 }
 
 /**
- * Obtiene el archivo de configuración del tema actual
+ * Get the theme configuration
+ * @param {folderName} route 
+ * @returns 
  */
 export async function getThemeConfig(route) {
 
   const file = path.resolve(dirname(), route, "theme.config.js");
+
   let config = themeConfig;
 
   if (fs.existsSync(file)) {
@@ -73,7 +68,9 @@ export async function getThemeConfig(route) {
 }
 
 /**
- * Obtiene el archivo de configuración de postcss
+ * Get the postcss configuration
+ * @param {folderName} route 
+ * @returns 
  */
 export async function getPostcssConfig(route) {
 
@@ -93,7 +90,29 @@ export async function getPostcssConfig(route) {
 }
 
 /**
- * Obtiene el archivo de configuración de rollup
+ * Get the nunjucks variables to use
+ * @param {folderName} route 
+ * @returns 
+ */
+export async function getNjkVariables(route) {
+
+  const file = path.resolve(dirname(), route, "nunjucks.variables.js");
+  let variables = {};
+
+  if (fs.existsSync(file)) {
+
+    const { default: currentVariables } = await import(`file://${file}`);
+
+    variables = { ...variables, ...currentVariables };
+  }
+
+  return variables;
+}
+
+/**
+ * Get the rollup configuration from the route
+ * @param {folderName} route 
+ * @returns 
  */
 export async function getRollupConfig(route) {
 
@@ -112,8 +131,12 @@ export async function getRollupConfig(route) {
   return config;
 }
 
-export function getPackageJson () {
-  const file = path.resolve(dirname(),"../", "package.json");
+/**
+ * Get the package.json content
+ * @returns Object
+ */
+export function getPackageJson() {
+  const file = path.resolve(dirname(), "../", "package.json");
   if (fs.existsSync(file)) {
     const packageFile = fs.readFileSync(file, 'utf8');
     return JSON.parse(packageFile);
@@ -124,16 +147,11 @@ export function getPackageJson () {
 
 export function getMode(mode) {
   return {
-    mode: mode,
+    mode: mode ?? "development",
     devMode: (mode ?? "development") == "development",
     demoMode: (mode ?? "") == "demo",
     prodMode: (mode ?? "") == "production",
   }
-}
-
-export function btagSelector(content, tagName) {
-  const regex = new RegExp(`<${tagName}(.*)?\/>`, 'g');
-  return content.match(regex) ?? [];
 }
 
 export function btagParams(tag) {

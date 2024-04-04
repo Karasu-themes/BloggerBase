@@ -6,5 +6,7 @@ const DEFAULT_FOLDER = 'app';
 
 export const CONFIG = {
   route: APP_PATH,
-  folderName: DEFAULT_FOLDER
+  folderName: DEFAULT_FOLDER,
+  folderAssets: "assets",
+  folderDist: "dist"
 }

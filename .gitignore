@@ -1,6 +1,7 @@
 # folder exclude
 node_modules
 .temp
+.test
 
 # file exclude
 package-lock.json
