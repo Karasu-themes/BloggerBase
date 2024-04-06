@@ -19,12 +19,12 @@
 
 ------
 
-[Demostración](https://blogger-base-xml.blogspot.com/ "ver demostración")
+[Demostración](https://ichiban-xml.blogspot.com/ "ver demostración")
 
 ## Característica destacadas
 
-- Motor de plantilla gracias a `ejs`
-- Compila código javascript y css directamente en los archivos `*.ejs`
+- Motor de plantilla gracias a `nunjucks`
+- Compila código javascript y css directamente en los archivos `*.njk`
 - Plantillas de ejemplos con excelente rendimiento
 - Soporte para plugins de **rollup** y **postcss**
 - Eso y mucho más en camino... 
@@ -35,7 +35,7 @@
 
 > Esta es una documentación temporal mientras se trabaja en una documentación más detallada y mejor explicada.
 
-Para instalar BloggerBase es sumamente sencillo, ejecuta el siguiente comando en terminal:
+Para instalar BloggerBase es sumamente sencillo, ejecuta el siguiente comando en tu terminal:
 
 ```
 npx create-blogger-theme my-awesome-template
@@ -59,8 +59,8 @@ trabajar en tu próxima plantilla de blogger.
 BloggerBase cuenta con tres comandos npm que nos permitirán trabajar con nuestra plantilla:
 
 - `build` crea un build de nuestra plantilla en formato .xml lista para instalar en Blogger o distribuir.
-- `start` ejecuta el modo de desarrollo el cuál nos permitirá trabajar en nuestro proyecto en tiempo real
-- `start:demo` Funcionamiento similar a `start`. Este modo dispará una variable `demoMode` para usar en los archivos `*.ejs`.
+- `start` ejecuta el modo de desarrollo el cuál nos permitirá trabajar en nuestro proyecto y aplicar cambios al momento
+- `start:demo` Funcionamiento similar a `start`. Este modo dispará una variable `{{ demoMode }}` para usar en los archivos `*.njk`.
 
 ## Estructura de carpetas
 
@@ -70,11 +70,10 @@ de carpetas y como organizamos cada archivo queda hasta cierto punto a elección
 ```
 app/
 ├── assets (requerido)
-├── markups (requerido)
-│   ├── common (requerido)
-│   └── gadgets (requerido)
-├── app.ejs (requerido)
-└── app.variables.ejs (requerido)
+├── markups
+│   ├── common
+│   └── gadgets
+├── app.njk (requerido)
 ```
 
 - **/app** Es la carpeta dónde almacenaremos nuestra plantilla para blogger.
@@ -82,118 +81,52 @@ app/
 - **/markups** Aquí va todo lo referente a los includables y elementos necesarios para agregar lógica y dinamismo a nuestra plantilla blogger.
   - **/common**
   - **/gadgets**
-- **app.ejs** punto de entrada de la plantilla.
-- **app.variables.ejs** punto de entrada a las variables de blogger que iremos creando para utilizar en nuestro proyecto.
+- **app.{xml,html,njk}** punto de entrada de la plantilla.
+
+> [!WARNING]
+> Bloggerbase tiene cómo punto de entrada un archvo `.njk`, `.html` o `.xml` con el nombre `app` para poder generar los archivos.
 
 ## Trabajar con estilos css y javascript
 
-Para trabajar nuestros estilos y código de javascript, contamos con dos etiquetas creadas para éste fin:
+Para trabajar nuestros estilos y código de javascript, contamos con dos directivas creadas para éste fin:
 
-### b:style
+### @style
 
-La etiqueta `<b:style/>` nos permitirá compilar y/o usar nuestro `css`, `scss` o `pcss`. Para usarla es tan simple como ubicar la etiqueta anteriormente mencionada en alguna parte en nuestros archivos **`*.ejs`**:
+La etiqueta `@style` nos permitirá compilar y/o usar nuestro `css`, `scss` o `pcss`. Para usarla es tan simple como ubicar la etiqueta anteriormente mencionada en alguna parte en nuestros archivos **`*.njk`**:
 
 ```xml
 <!-- Sintaxis -->
-<b:style src='ruta/a/mi/estilo.css' render='true' cdta='true'/>
+@style(src='ruta/a/mi/estilo.css');
 ```
-La etiqueta de estilo tiene los siguientes atributos para poder utilizar:
 
-- `src`: ruta al archivo `css, scss, pcss` que queremos utilizar.
-- `render`: Agrega el estilo css compilado desde la ruta especificada en una etiqueta `<style>`. Por defecto dicha etiqueta no se agrega.
-- `cdta`: Agrega `<![CDATA[` y `]]>` a la etiqueta `<style>`. Éste atributo solo será tomado en cuenta cuando usemos la propiedad `render`
+> Por defecto @style, compila automaticamente los estilos **`*.css`** cómo archivos de postcss (pcss) por lo que estos son compatibles con los plugins de postcss que instalemos y usemos.
 
-> Por defecto b:style, compila automaticamente los estilos **`*.css`** cómo archivos de postcss (pcss) por lo que estos son compatibles con los plugins de postcss que instalemos y usemos.
+> [!WARNING]
+> Ésta directiva usa clean-css para minificar el código css generado, por lo que no es necesario incluir un plugin para este fin.
 
+> [!WARNING]
+> Recuerda incluir las etiquetas `<style>` `</style>` si necesitas agregar estilos fuera de la etiqueta `<b:skin>`
 
-### b:script
+### @script
 
-La etiqueta `<b:script/>` nos permite compilar código js directamente en nuestros archivos ***.ejs** gracias a rollup y soporta plugins de éste.
+La etiqueta `@script` nos permite compilar código js directamente en nuestros archivos ***.njk** gracias a rollup y soporta plugins de éste.
 
 ```xml
-<b:script src='ruta/a/mi/script.js' name='myApp' format='iife' cdta='true'/>
+<script>
+@script(src='ruta/a/mi/script.js')
+</script>
 ```
 
-Esta etiqueta tiene los siguientes atributos para poder utilizar:
+> [!WARNING]
+> Ésta directiva usa terser para minificar el código javascript por lo qué no es necesario agregar un plugin para este fin.
 
-- `src`: ruta al archivo js.
-- `name`: Nombre de nuestra función generada con rollup. Por defecto toma el nombre del archivo js
-- `cdta`: Agrega `<![CDATA[` y `]]>` a la etiqueta `<script>`.
-- `format`: El formato aceptado por rollup. Por defecto usa `iife`
+### Ruta base
 
-## Ruta base
-
-Tanto `b:script` y `b:style` tienen de punto de entrada la carpeta `assets` para encontrar los archivos **js, scs, css, pcss** que necesitemos al momento de usar alguna de las etiquetas antes mencionadas
+Tanto `@script` y `@style` tienen de punto de entrada la carpeta `./assets` para encontrar los archivos **js, scs, css, pcss** que necesitemos al momento de usar alguna de las etiquetas antes mencionadas
 
 ### Consideraciones
 
 Tanto **rollup** cómo **postcss** podrían o no soportar algunos plugins por el momento.
-
-## Ejs
-
-BloggerBase utiliza `ejs` cómo motor de plantilla y con el podrás manejar todo lo referente a la organización y lógica para crear tu plantilla blogger de manera que sea más fácil que hacerlo todo en un mismo archivo.
-
-- [Saber más sobre ejs](https://ejs.co/)
-
-### Funciones
-
-Se han preparado 3 funciones que nos permitirán crear las `<Variables>` de blogger que usamos para agregar personalización o extender algunas Característica en  nuestra plantilla blogger:
-
-- **Variable(`Object`)**
-- **Variables(`Object`)**
-- **VariableGroup(`String`, `String`, `Object`)**
-
-#### Variable
-
-> Crea una variable blogger con las propiedades pasadas cómo parametro
-
-```ejs
-<%- 
-variable({name: "m.showMeta", description: "Show the post meta", type: "string", value: "true"}) 
-// resultado
-// <Variable name="m.showMeta" description="Show the post meta" type="string" value="true" />
-%>
-```
-
-#### Variables
-
-> Crea una lista de variables blogger con las propiedades pasadas cómo parametro
-
-```ejs
-<%- 
-Variables("Meta option", [
-  {name: "m.showMeta", description: "Show the post meta", type: "string", value: "true"},
-  {name: "m.showUserMeta", description: "Show the post username", type: "string", value: "true"},
-  {name: "m.showDateMeta", description: "Show the post date", type: "string", value: "true"},
-]); 
-// resultado
-// <Variable name="m.showMeta" description="Show the post meta" type="string" value="true" />
-// <Variable name="m.showUserMeta" description="Show the post username" type="string" value="true" />
-// <Variable name="m.showDateMeta" description="Show the post date" type="string" value="true" />
-%>
-```
-
-#### VariableGroup
-
-> Crea un `<Group>` con una lista de variables blogger
-
-```ejs
-<%- 
-<%- 
-VariableGroup("Light scheme color", "Light scheme color", "body",
-[
-{name: "c.primary", description: "Primary color", type: "color", default: "#6366F1", value: "#6366F1"},
-{name: "c.body", description: "body color", type: "color", default: "#fff", value: "#fff"},
-])
-_%>
-// resultado
-// <!-- Light scheme color -->
-// <Group description="Light scheme color" selector="body">
-//   <Variable name="c.primary" description="Primary color" type="color" default="#6366F1" value="#6366F1" />
-//   <Variable name="c.body" description="body color" type="color" default="#fff" value="#fff" />
-// </Group>
-%>
-```
 
 ## Reporte de errores
 
