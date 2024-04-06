@@ -155,14 +155,14 @@ export function getMode(mode) {
 }
 
 export function btagParams(tag) {
-  const src = tag.match(/src="([^"]+)"/g) != null ? tag.match(/src="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
-  const format = tag.match(/format="([^"]+)"/g) != null ? tag.match(/format="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
-  const output = tag.match(/output="([^"]+)"/g) != null ? tag.match(/output="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
-  const name = tag.match(/name="([^"]+)"/g) != null ? tag.match(/name="([^"]+)"/g)[0].match(/[^"]+/g)[1] : "";
-  const cdta = /cdta/g.test(tag);
-  const render = /render/g.test(tag);
+  const params = tag.match(/\w+=['"]([^"']+)?['"]/g); // match with: attr="", attr="value", attr='', attr='value'
+  let objParam = {};
 
-  return {
-    src, format, output, name, cdta, render
-  }
+  params.forEach(param => {
+    const keyName = param.replace(/(?:\=['"](.*)?['"])/g, '');
+    const matchValue = param.match(/(?:['"](.*)?['"])/);
+    objParam[keyName] = matchValue[1] ?? "";
+  });
+
+  return objParam;
 }
