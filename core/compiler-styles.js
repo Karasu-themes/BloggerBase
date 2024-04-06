@@ -45,7 +45,8 @@ export default async function compilerStyles(content, opts = {}) {
       const compiledMinify = new CleanCSS({}).minify(css);;
       compiled = css;
 
-      if (opts.modes.mode === "production") {
+      // Write compiled file only if the mode is set on "production" and "build" params is provided
+      if (opts.modes.mode === "production" && (params.build && params.build == "true")) {
         const pathBuild = `./${CONFIG.folderDist}/css`;
         if (!fs.existsSync(`./${CONFIG.folderDist}`)) fs.mkdirSync(`./${CONFIG.folderDist}`);
         if (!fs.existsSync(pathBuild)) fs.mkdirSync(pathBuild);
