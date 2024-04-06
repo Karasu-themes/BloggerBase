@@ -37,7 +37,7 @@ export default async function compilerStyles(content, opts = {}) {
       }
 
       // Process css with postcss
-      const { css } = await postcss(postcssConfig.plugins).process(compiled.css, { from: undefined });
+      const { css } = await postcss(postcssConfig.plugins).process(compiled.css ?? compiled, { from: undefined });
 
       // Minify the css with CleanCSS
       const compiledMinify = new CleanCSS({}).minify(css);;
