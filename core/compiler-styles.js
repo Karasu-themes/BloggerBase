@@ -20,12 +20,11 @@ export default async function compilerStyles(content, opts = {}) {
       const lang = path.extname(params.src).replace('.', '') ?? "css";
       const filePath = path.resolve(path.join(CONFIG.route, CONFIG.folderName, CONFIG.folderAssets, params.src))
       const fileName = path.parse(params.src).name;
-      const fileStat = fs.statSync(filePath);
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
       // Compile scss/sass files
       if (lang == "scss" || lang == "sass") {
-        compiled = await sass.compileStringAsync(fileContent, {
+        const sassCompiled = await sass.compileStringAsync(fileContent, {
           loadPaths: [
             path.resolve(`./${CONFIG.folderName}/${CONFIG.folderAssets}/`),
             path.resolve(`./${CONFIG.folderName}/${CONFIG.folderAssets}/css/`),
@@ -34,10 +33,13 @@ export default async function compilerStyles(content, opts = {}) {
           ],
           style: params.output ? params.output : "expanded"
         });
+        compiled = sassCompiled.css;
+      } else {
+        compiled = fileContent;
       }
 
       // Process css with postcss
-      const { css } = await postcss(postcssConfig.plugins).process(compiled.css ?? compiled, { from: undefined });
+      const { css } = await postcss(postcssConfig.plugins).process(compiled, { from: undefined });
 
       // Minify the css with CleanCSS
       const compiledMinify = new CleanCSS({}).minify(css);;
