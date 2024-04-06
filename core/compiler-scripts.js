@@ -34,7 +34,7 @@ export default async function compilerScripts(content, opts = {}) {
       // Minify the code
       const minifyCode = await minify(code);
 
-      // Write the compiled css for production
+      // Write the compiled js for production
       if (opts.modes.mode === "production") {
         const pathBuild = `./${CONFIG.folderDist}/js`;
         if (!fs.existsSync(`./${CONFIG.folderDist}`)) fs.mkdirSync(`./${CONFIG.folderDist}`);
@@ -43,7 +43,7 @@ export default async function compilerScripts(content, opts = {}) {
         fs.writeFileSync(path.resolve(path.join(pathBuild, `${fileName}.min.js`)), minifyCode.code.trim(), "utf8");
       }
 
-      scripts = scripts.replace(bscripts, minifyCode.code.trim());
+      scripts = scripts.replace(bscript, minifyCode.code.trim());
     }
   }
 
