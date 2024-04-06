@@ -27,7 +27,7 @@ export default async function compilerScripts(content, opts = {}) {
       // Generate de compile code
       const { output } = await bundle.generate({
         format: params.format || "iife",
-        name: params.name ?? fileName
+        name: (params.name ? params.name : fileName)
       });
       const [{ code }] = output;
 
