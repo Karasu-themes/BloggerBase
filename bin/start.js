@@ -7,6 +7,7 @@ import compilerXML from '../core/compiler-xml.js';
 import { writeBuild, getThemeConfig, getMode, getPackageJson, timeStamp } from '../core/utils.js';
 import compilerStyles from '../core/compiler-styles.js';
 import compilerScripts from '../core/compiler-scripts.js';
+import blogger from '../core/blogger.js';
 
 export default function start(program, { route, folderName }) {
 
@@ -38,6 +39,7 @@ export default function start(program, { route, folderName }) {
 
         compiled = await compilerStyles(compiled, { ...{ modes: getMode(mode) } });
         compiled = await compilerScripts(compiled, { ...{ modes: getMode(mode) } });
+        compiled = await blogger(compiled);
 
         writeBuild(compiled, config, tempFolder);
 
