@@ -23,8 +23,8 @@
 
 ## Característica destacadas
 
-- Motor de plantilla gracias a `nunjucks`
-- Compila código javascript y css directamente en los archivos `*.njk`
+- Motor de plantilla gracias a `ejs`
+- Compila código javascript y css directamente en los archivos `*.ejs`
 - Plantillas de ejemplos con excelente rendimiento
 - Soporte para plugins de **rollup** y **postcss**
 - Eso y mucho más en camino... 
@@ -60,7 +60,7 @@ BloggerBase cuenta con tres comandos npm que nos permitirán trabajar con nuestr
 
 - `build` crea un build de nuestra plantilla en formato .xml lista para instalar en Blogger o distribuir.
 - `start` ejecuta el modo de desarrollo el cuál nos permitirá trabajar en nuestro proyecto y aplicar cambios al momento
-- `start:demo` Funcionamiento similar a `start`. Este modo dispará una variable `{{ demoMode }}` para usar en los archivos `*.njk`.
+- `start:demo` Funcionamiento similar a `start`. Este modo dispará una variable `{{ demoMode }}` para usar en los archivos `*.ejs`.
 
 ## Estructura de carpetas
 
@@ -73,7 +73,7 @@ app/
 ├── markups
 │   ├── common
 │   └── gadgets
-├── app.njk (requerido)
+├── app.ejs (requerido)
 ```
 
 - **/app** Es la carpeta dónde almacenaremos nuestra plantilla para blogger.
@@ -84,7 +84,7 @@ app/
 - **app.{xml,html,njk}** punto de entrada de la plantilla.
 
 > [!WARNING]
-> Bloggerbase tiene cómo punto de entrada un archvo `.njk`, `.html` o `.xml` con el nombre `app` para poder generar los archivos.
+> Bloggerbase tiene cómo punto de entrada un archvo `.ejs`, `.html` o `.xml` con el nombre `app` para poder generar los archivos.
 
 ## Trabajar con estilos css y javascript
 
@@ -92,7 +92,7 @@ Para trabajar nuestros estilos y código de javascript, contamos con dos directi
 
 ### @style
 
-La etiqueta `@style` nos permitirá compilar y/o usar nuestro `css`, `scss` o `pcss`. Para usarla es tan simple como ubicar la etiqueta anteriormente mencionada en alguna parte en nuestros archivos **`*.njk`**:
+La etiqueta `@style` nos permitirá compilar y/o usar nuestro `css`, `scss` o `pcss`. Para usarla es tan simple como ubicar la etiqueta anteriormente mencionada en alguna parte en nuestros archivos **`*.ejs`**:
 
 ```xml
 <!-- Sintaxis -->
@@ -109,7 +109,7 @@ La etiqueta `@style` nos permitirá compilar y/o usar nuestro `css`, `scss` o `p
 
 ### @script
 
-La etiqueta `@script` nos permite compilar código js directamente en nuestros archivos ***.njk** gracias a rollup y soporta plugins de éste.
+La etiqueta `@script` nos permite compilar código js directamente en nuestros archivos ***.ejs** gracias a rollup y soporta plugins de éste.
 
 ```xml
 <script>
