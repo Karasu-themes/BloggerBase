@@ -1,6 +1,6 @@
 {
   "name": "bloggerbase",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "A basic tool for building blogger template based on ejs",
   "type": "module",
   "repository": {
