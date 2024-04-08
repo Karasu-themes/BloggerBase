@@ -2,7 +2,7 @@ export function addAutoIDWidget(content) {
   let compiled = content;
   const bwidgets = content.match(/<b\:widget(.*)?>/g) ?? [];
 
-  // Todos los tipos de widgets disponibles
+  // All widgets types available
   const widgetTypes = [
     "AdSense",
     "Attributions",
@@ -35,8 +35,8 @@ export function addAutoIDWidget(content) {
     let count = 0;
     for (const bwidget of bwidgets) {
       const wtype = /type=['"][A-Za-z-0-9]+['"]/.exec(bwidget);
-
-      if (wtype[0].includes(type) && !bwidget.includes('id=')) {
+      const ctype = wtype[0].replace(/(?:\w+=|')/g, '');
+      if (ctype == type && !bwidget.includes('id=')) {
         count++;
         compiled = compiled.replace(bwidget, `<b:widget type='${type}' id='${type}${count}' />`)
       }
@@ -49,7 +49,7 @@ export function addAutoIDWidget(content) {
 
 export function bloggerVariables(content) {
   let compiled = content;
-  const variables = content.match(/<Variables(.*)?\/>/g) ?? [];
+  const variables = content.match(/<Variable(.*)?\/>/g) ?? [];
 
   for (const variable of variables) {
     let attrs = '';
@@ -58,7 +58,7 @@ export function bloggerVariables(content) {
     const bvars = JSON.parse(params[1]);
 
     for (const key in bvars) {
-      attrs += `${key}='${bvars[key]}' `;
+      attrs += `${key}="${bvars[key]}" `;
     }
 
     compiled = compiled.replace(regex, attrs);
