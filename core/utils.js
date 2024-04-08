@@ -6,9 +6,9 @@ import { themeConfig } from '../theme.config.js';
 export function getEntryPointApp(route, folderName) {
   let getEntryPointApp = fs.readdirSync(path.resolve(route, folderName));
   getEntryPointApp = getEntryPointApp.filter(n => {
-    return /app\.(xml|njk|html)/g.test(n)
+    return /app\.(xml|ejs|html)/g.test(n)
   });
-  return getEntryPointApp[0] ?? "app.njk";
+  return getEntryPointApp[0] ?? "app.ejs";
 }
 
 export function writeBuild(content, config = {}, DIR = './dist') {
@@ -90,13 +90,13 @@ export async function getPostcssConfig(route) {
 }
 
 /**
- * Get the nunjucks variables to use
+ * Get the ejs variables to use
  * @param {folderName} route 
  * @returns 
  */
-export async function getNjkVariables(route) {
+export async function getEjsVariables(route) {
 
-  const file = path.resolve(dirname(), route, "nunjucks.variables.js");
+  const file = path.resolve(dirname(), route, "ejs.variables.js");
   let variables = {};
 
   if (fs.existsSync(file)) {

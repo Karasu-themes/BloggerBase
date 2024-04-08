@@ -18,12 +18,11 @@ export default function start(program, { route, folderName }) {
     .description('Start the development mode')
     .option('-m, --mode <mode>', 'Mode use')
     .action(async (opts) => {
-      const cache = {};
       const mode = opts.mode ?? "development";
       const { version } = getPackageJson();
       const config = await getThemeConfig(route);
       const watcher = chokidar.watch(
-        [`./${CONFIG.folderName}/**/*.{xml,njk,html,js,scss,sass,css}`],
+        [`./${CONFIG.folderName}/**/*.{xml,ejs,html,js,scss,sass,css}`],
         {
           ignoreInitial: true,
           ignored: /(^|[\s\/\\])(?!\_)\../,
