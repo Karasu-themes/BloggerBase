@@ -1,3 +1,5 @@
+import { btagParams } from './utils.js';
+
 export function addAutoIDWidget(content) {
   let compiled = content;
   const bwidgets = content.match(/<b\:widget(.*)?>/g) ?? [];
@@ -36,9 +38,17 @@ export function addAutoIDWidget(content) {
     for (const bwidget of bwidgets) {
       const wtype = /type=['"][A-Za-z-0-9]+['"]/.exec(bwidget);
       const ctype = wtype[0].replace(/(?:\w+=|')/g, '');
+      const isAutoCloseTag = /\/>/g.test(bwidget) ?? false;
+
       if (ctype == type && !bwidget.includes('id=')) {
+        let attrs = '';
+        const params = btagParams(wtype.input);
         count++;
-        compiled = compiled.replace(bwidget, `<b:widget type='${type}' id='${type}${count}' />`)
+
+        params.id = type + count;
+        for (const key in params) attrs += `${key}="${params[key]}" `;
+
+        compiled = compiled.replace(bwidget, `<b:widget ${attrs}${(isAutoCloseTag ? "/" : "")}>`)
       }
     }
 
