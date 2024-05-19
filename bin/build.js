@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import path from 'node:path';
+import { CONFIG } from '../core/config.js';
 import compiler from '../core/compiler.js';
 import { writeBuild, getThemeConfig, getMode, getPackageJson, getEntryPointApp } from '../core/utils.js';
 
@@ -22,6 +22,6 @@ export default function build(program, { route, folderName }) {
         ...{ modes: getMode(mode) }
       });
 
-      writeBuild(compiled, config)
+      writeBuild(compiled, config, CONFIG.route + "/dist")
     });
 }

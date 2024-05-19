@@ -18,6 +18,7 @@ export default async function compilerStyles(content, opts = {}) {
     if (params.src) {
       let compiled = '';
       const lang = path.extname(params.src).replace('.', '') ?? "css";
+      const folderPath = path.resolve(path.join(CONFIG.route, CONFIG.folderName, CONFIG.folderAssets));
       const filePath = path.resolve(path.join(CONFIG.route, CONFIG.folderName, CONFIG.folderAssets, params.src))
       const fileName = path.parse(params.src).name;
       const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -26,10 +27,12 @@ export default async function compilerStyles(content, opts = {}) {
       if (lang == "scss" || lang == "sass") {
         const sassCompiled = await sass.compileStringAsync(fileContent, {
           loadPaths: [
-            path.resolve(`./${CONFIG.folderName}/${CONFIG.folderAssets}/`),
-            path.resolve(`./${CONFIG.folderName}/${CONFIG.folderAssets}/css/`),
-            path.resolve(`./${CONFIG.folderName}/${CONFIG.folderAssets}/scss/`),
-            path.resolve(`./${CONFIG.folderName}/${CONFIG.folderAssets}/sass/`)
+            path.resolve(`${folderPath}/`),
+            path.resolve(`${folderPath}/style/`),
+            path.resolve(`${folderPath}/styles/`),
+            path.resolve(`${folderPath}/css/`),
+            path.resolve(`${folderPath}/scss/`),
+            path.resolve(`${folderPath}/sass/`)
           ],
           style: params.output ? params.output : "expanded"
         });
@@ -47,8 +50,8 @@ export default async function compilerStyles(content, opts = {}) {
 
       // Write compiled file only if the mode is set on "production" and "build" params is provided
       if (opts.modes.mode === "production" && (params.build && params.build == "true")) {
-        const pathBuild = `./${CONFIG.folderDist}/css`;
-        if (!fs.existsSync(`./${CONFIG.folderDist}`)) fs.mkdirSync(`./${CONFIG.folderDist}`);
+        const pathBuild = `${CONFIG.route}/${CONFIG.folderDist}/css`;
+        if (!fs.existsSync(`${CONFIG.route}/${CONFIG.folderDist}`)) fs.mkdirSync(`${CONFIG.route}/${CONFIG.folderDist}`);
         if (!fs.existsSync(pathBuild)) fs.mkdirSync(pathBuild);
         fs.writeFileSync(path.resolve(path.join(pathBuild, `${fileName}.css`)), compiled.trim(), "utf8")
         fs.writeFileSync(path.resolve(path.join(pathBuild, `${fileName}.min.css`)), compiledMinify.styles.trim(), "utf8")
